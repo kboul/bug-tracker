@@ -3,6 +3,7 @@ import store from './store';
 import { bugAdded, bugResolved } from './store/bugs/actions';
 import { projectAdded } from './store/projects/actions';
 import { userAdded } from './store/users/action';
+import { unresolvedBugs } from './store/utils';
 
 console.log(store.getState());
 
@@ -25,3 +26,7 @@ store.dispatch(userAdded('User 1'));
 store.dispatch(userAdded('User 2'));
 
 store.dispatch(userAdded('User 3'));
+
+const unresolvedbugs = unresolvedBugs(store.getState());
+
+console.log(unresolvedbugs);
