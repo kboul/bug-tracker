@@ -1,0 +1,7 @@
+const prefix = 'bugs';
+
+export default {
+    bugAdded: `${prefix}/bugAdded`,
+    bugRemoved: `${prefix}/bugRemoved`,
+    bugResolved: `${prefix}/bugResolved`
+};
