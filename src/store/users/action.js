@@ -1,13 +1,14 @@
 import types from './actionTypes';
 
-let lastId = 0;
+/**
+ *
+ * @param {Object} payload
+ * @returns {Object}
+ */
 
-const userAdded = name => ({
+const userAdded = payload => ({
     type: types.userAdded,
-    payload: {
-        id: ++lastId,
-        name
-    }
+    payload
 });
 
 export { userAdded };

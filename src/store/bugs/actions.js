@@ -1,24 +1,47 @@
 import types from './actionTypes';
 
-const bugAdded = description => ({
+/**
+ *
+ * @param {Object} payload
+ * @returns {Object}
+ */
+
+const bugAdded = payload => ({
     type: types.bugAdded,
-    payload: {
-        description
-    }
+    payload
 });
 
-const bugRemoved = id => ({
+/**
+ *
+ * @param {Object} payload
+ * @returns {Object}
+ */
+
+const bugRemoved = payload => ({
     type: types.bugRemoved,
-    payload: {
-        id
-    }
+    payload
 });
 
-const bugResolved = id => ({
+/**
+ *
+ * @param {Object} payload
+ * @returns {Object}
+ */
+
+const bugResolved = payload => ({
     type: types.bugResolved,
-    payload: {
-        id
-    }
+    payload
 });
 
-export { bugAdded, bugRemoved, bugResolved };
+/**
+ *
+ * @param {Object} payload
+ * @returns {Object}
+ */
+
+const bugAssignedToUser = payload => ({
+    type: types.bugAssignedtoUser,
+    payload
+});
+
+export { bugAdded, bugRemoved, bugResolved, bugAssignedToUser };

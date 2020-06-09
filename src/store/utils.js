@@ -11,4 +11,16 @@ const unresolvedBugs = createSelector(
     bugs => bugs.filter(({ resolved }) => !resolved)
 );
 
-export { unresolvedBugs };
+/**
+ *
+ * @param {number} userid
+ * @returns {Function} - call it using currying
+ */
+
+const bugsByUser = userid =>
+    createSelector(
+        state => state.entities.bugs,
+        bugs => bugs.filter(({ userId }) => userId === userid)
+    );
+
+export { unresolvedBugs, bugsByUser };

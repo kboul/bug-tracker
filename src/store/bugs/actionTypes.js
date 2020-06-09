@@ -3,5 +3,6 @@ const prefix = 'bugs';
 export default {
     bugAdded: `${prefix}/bugAdded`,
     bugRemoved: `${prefix}/bugRemoved`,
-    bugResolved: `${prefix}/bugResolved`
+    bugResolved: `${prefix}/bugResolved`,
+    bugAssignedtoUser: `${prefix}/bugAssignedtoUser`
 };

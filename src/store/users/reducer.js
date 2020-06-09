@@ -1,15 +1,19 @@
 import types from './actionTypes';
 
+let lastId = 0;
+
 const reducer = (state = [], action) => {
     switch (action.type) {
-        case types.userAdded:
+        case types.userAdded: {
+            const { name } = action.payload;
             return [
                 ...state,
                 {
-                    id: action.payload.id,
-                    name: action.payload.name
+                    id: ++lastId,
+                    name
                 }
             ];
+        }
         default:
             return state;
     }
