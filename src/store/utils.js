@@ -8,7 +8,7 @@ import { createSelector } from 'reselect';
 
 const unresolvedBugs = createSelector(
     state => state.entities.bugs,
-    bugs => bugs.filter(({ resolved }) => !resolved)
+    bugs => bugs.list.filter(({ resolved }) => !resolved)
 );
 
 /**
@@ -20,7 +20,7 @@ const unresolvedBugs = createSelector(
 const bugsByUser = userid =>
     createSelector(
         state => state.entities.bugs,
-        bugs => bugs.filter(({ userId }) => userId === userid)
+        bugs => bugs.list.filter(({ userId }) => userId === userid)
     );
 
 export { unresolvedBugs, bugsByUser };
