@@ -27,6 +27,8 @@ store.dispatch(bugResolved({ id: 1 }));
 
 store.dispatch(projectAdded({ name: 'Project 1' }));
 
+store.dispatch({ type: 'error', payload: { message: 'An error occured' } });
+
 const unresolvedbugs = unresolvedBugs(store.getState());
 
 const bugsByUser1 = bugsByUser(1)(store.getState());
