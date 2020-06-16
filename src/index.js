@@ -4,6 +4,7 @@ import { bugAdded, bugResolved, bugAssignedToUser } from './store/bugs/actions';
 import { projectAdded } from './store/projects/actions';
 import { userAdded } from './store/users/action';
 import { unresolvedBugs, bugsByUser } from './store/utils';
+import { apiCallBegan } from './store/api/actions';
 
 // console.log(store.getState());
 
@@ -21,13 +22,13 @@ store.dispatch(bugAdded({ description: 'Bug 3' }));
 
 store.dispatch(bugAssignedToUser({ bugId: 1, userId: 1 }));
 
-// unsuscribe();
+// // unsuscribe();
 
 store.dispatch(bugResolved({ id: 1 }));
 
 store.dispatch(projectAdded({ name: 'Project 1' }));
 
-store.dispatch({ type: 'error', payload: { message: 'An error occured' } });
+// // store.dispatch({ type: 'error', payload: { message: 'An error occured' } });
 
 const unresolvedbugs = unresolvedBugs(store.getState());
 
@@ -35,3 +36,10 @@ const bugsByUser1 = bugsByUser(1)(store.getState());
 
 console.log(unresolvedbugs);
 console.log(bugsByUser1);
+
+store.dispatch(
+    apiCallBegan({
+        url: '/bugs',
+        onSuccess: 'bugsReceived'
+    })
+);
