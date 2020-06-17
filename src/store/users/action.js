@@ -1,14 +1,28 @@
+import moment from 'moment';
 import types from './actionTypes';
+import { apiCallBegan } from '../api/actions';
+
+const url = '/users';
 
 /**
  *
- * @param {Object} payload
  * @returns {Object}
  */
 
-const userAdded = payload => ({
-    type: types.userAdded,
-    payload
-});
+const loadUsers = () => (dispatch, getState) => {
+    const { lastFetch } = getState().entities.users;
 
-export { userAdded };
+    const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
+    if (diffInMinutes < 10) return;
+
+    dispatch(
+        apiCallBegan({
+            url,
+            onStart: types.usersRequested,
+            onSuccess: types.usersReceived,
+            onError: types.usersRequestFailed
+        })
+    );
+};
+
+export { loadUsers };

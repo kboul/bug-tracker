@@ -1,5 +1,7 @@
 const prefix = 'users';
 
 export default {
-    userAdded: `${prefix}/userAdded`
+    usersReceived: `${prefix}/usersReceived`,
+    usersRequested: `${prefix}/usersRequested`,
+    usersRequestFailed: `${prefix}/usersRequestFailed`
 };

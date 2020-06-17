@@ -1,0 +1,59 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+.flex-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row {
+    width: 30%;
+}
+
+#bugsTable {
+    font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+#bugsTable td,
+#bugsTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#bugsTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#bugsTable tr:hover {
+    background-color: #ddd;
+}
+
+#bugsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+}
+
+#addBug {
+    margin-top: 10px;
+}
