@@ -38,5 +38,5 @@ import types from './store/bugs/actionTypes';
 
 // console.log(unresolvedbugs);
 // console.log(bugsByUser1);
-
 store.dispatch(loadBugs());
+setTimeout(() => store.dispatch(loadBugs()), 2000);

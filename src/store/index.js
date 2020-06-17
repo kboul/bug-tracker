@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
 import logger from './middleware/logger';
@@ -10,7 +11,7 @@ const composerEnhancer = composeWithDevTools({
 });
 
 // Put the list of third part plugins in an array
-const middleWares = [logger('console'), toast, api];
+const middleWares = [thunk, logger('console'), toast, api];
 
 const store = createStore(
     reducer,

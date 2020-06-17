@@ -1,3 +1,4 @@
+import moment from 'moment';
 import types from './actionTypes';
 import { apiCallBegan } from '../api/actions';
 
@@ -58,16 +59,24 @@ const bugReceived = payload => ({
 
 /**
  *
- * @returns {Function}
+ * @returns {Object}
  */
 
-const loadBugs = () =>
-    apiCallBegan({
-        url: '/bugs',
-        onStart: types.bugsRequested,
-        onSuccess: types.bugsReceived,
-        onError: types.bugsRequestFailed
-    });
+const loadBugs = () => (dispatch, getState) => {
+    const { lastFetch } = getState().entities.bugs;
+
+    const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
+    if (diffInMinutes < 10) return;
+
+    dispatch(
+        apiCallBegan({
+            url: '/bugs',
+            onStart: types.bugsRequested,
+            onSuccess: types.bugsReceived,
+            onError: types.bugsRequestFailed
+        })
+    );
+};
 
 export {
     bugAdded,
