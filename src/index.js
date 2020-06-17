@@ -6,9 +6,9 @@ import {
     resolveBug,
     assignBugToUser
 } from './store/bugs/actions';
-import { projectAdded } from './store/projects/actions';
-import { userAdded } from './store/users/action';
-import { unresolvedBugs, bugsByUser } from './store/utils';
+// import { projectAdded } from './store/projects/actions';
+// import { userAdded } from './store/users/action';
+// import { unresolvedBugs, bugsByUser } from './store/utils';
 
 // console.log(store.getState());
 
