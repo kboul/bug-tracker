@@ -1,4 +1,5 @@
 import types from './actionTypes';
+import { apiCallBegan } from '../api/actions';
 
 /**
  *
@@ -44,4 +45,33 @@ const bugAssignedToUser = payload => ({
     payload
 });
 
-export { bugAdded, bugRemoved, bugResolved, bugAssignedToUser };
+/**
+ *
+ * @param {Object} payload
+ * @returns {Object}
+ */
+
+const bugReceived = payload => ({
+    type: types.bugsReceived,
+    payload
+});
+
+/**
+ *
+ * @returns {Function}
+ */
+
+const loadBugs = () =>
+    apiCallBegan({
+        url: '/bugs',
+        onSuccess: types.bugsReceived
+    });
+
+export {
+    bugAdded,
+    bugRemoved,
+    bugResolved,
+    bugAssignedToUser,
+    bugReceived,
+    loadBugs
+};

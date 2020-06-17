@@ -9,10 +9,12 @@ const composerEnhancer = composeWithDevTools({
     trace: true
 });
 
-const middleWares = [logger('console'), toast, api]; // Put the list of third part plugins in an array
+// Put the list of third part plugins in an array
+const middleWares = [logger('console'), toast, api];
 
 const store = createStore(
     reducer,
+    // middlewares should go after reducer
     compose(applyMiddleware(...middleWares), composerEnhancer())
 );
 

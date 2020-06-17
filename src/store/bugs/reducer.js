@@ -47,6 +47,9 @@ const reducer = (state = initialState, action) => {
             );
             return { ...state, list };
         }
+        case types.bugsReceived: {
+            return { ...state, list: action.payload };
+        }
         default:
             return state;
     }

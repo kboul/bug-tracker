@@ -1,4 +1,4 @@
-import types from './types';
+import types from './actionTypes';
 
 /**
  *
@@ -7,7 +7,7 @@ import types from './types';
  */
 
 const apiCallBegan = payload => ({
-    type: types.callBegan,
+    type: types.apiCallBegan,
     payload
 });
 
@@ -18,7 +18,7 @@ const apiCallBegan = payload => ({
  */
 
 const apiCallSuccess = payload => ({
-    type: types.callSuccess,
+    type: types.apiCallSuccess,
     payload
 });
 
@@ -29,7 +29,7 @@ const apiCallSuccess = payload => ({
  */
 
 const apiCallFailed = payload => ({
-    type: types.callFailed,
+    type: types.apiCallFailed,
     payload
 });
 
