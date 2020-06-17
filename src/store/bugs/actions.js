@@ -78,11 +78,26 @@ const loadBugs = () => (dispatch, getState) => {
     );
 };
 
+/**
+ *
+ * @param {Object} bug
+ * @returns {Object}
+ */
+
+const addBug = bug =>
+    apiCallBegan({
+        url: '/bugs',
+        method: 'post',
+        data: bug,
+        onSuccess: types.bugAdded
+    });
+
 export {
     bugAdded,
     bugRemoved,
     bugResolved,
     bugAssignedToUser,
     bugReceived,
-    loadBugs
+    loadBugs,
+    addBug
 };

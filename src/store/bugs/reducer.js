@@ -1,7 +1,5 @@
 import types from './actionTypes';
 
-let lastId = 0;
-
 const initialState = {
     list: [],
     loading: false,
@@ -11,17 +9,9 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case types.bugAdded: {
-            const { description } = action.payload;
             return {
                 ...state,
-                list: [
-                    ...state.list,
-                    {
-                        id: ++lastId,
-                        description,
-                        resolved: false
-                    }
-                ]
+                list: [...state.list, { ...action.payload }]
             };
         }
         case types.bugRemoved: {

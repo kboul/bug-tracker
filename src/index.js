@@ -1,16 +1,9 @@
 import store from './store';
 // import store from './customStore';
-import {
-    bugAdded,
-    bugResolved,
-    bugAssignedToUser,
-    loadBugs
-} from './store/bugs/actions';
+import { loadBugs, addBug } from './store/bugs/actions';
 import { projectAdded } from './store/projects/actions';
 import { userAdded } from './store/users/action';
 import { unresolvedBugs, bugsByUser } from './store/utils';
-import { apiCallBegan } from './store/api/actions';
-import types from './store/bugs/actionTypes';
 
 // console.log(store.getState());
 
@@ -39,4 +32,5 @@ import types from './store/bugs/actionTypes';
 // console.log(unresolvedbugs);
 // console.log(bugsByUser1);
 store.dispatch(loadBugs());
-setTimeout(() => store.dispatch(loadBugs()), 2000);
+
+store.dispatch(addBug({ description: 'new bug' }));
