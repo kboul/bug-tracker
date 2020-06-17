@@ -2,60 +2,7 @@ import moment from 'moment';
 import types from './actionTypes';
 import { apiCallBegan } from '../api/actions';
 
-/**
- *
- * @param {Object} payload
- * @returns {Object}
- */
-
-const bugAdded = payload => ({
-    type: types.bugAdded,
-    payload
-});
-
-/**
- *
- * @param {Object} payload
- * @returns {Object}
- */
-
-const bugRemoved = payload => ({
-    type: types.bugRemoved,
-    payload
-});
-
-/**
- *
- * @param {Object} payload
- * @returns {Object}
- */
-
-const bugResolved = payload => ({
-    type: types.bugResolved,
-    payload
-});
-
-/**
- *
- * @param {Object} payload
- * @returns {Object}
- */
-
-const bugAssignedToUser = payload => ({
-    type: types.bugAssignedtoUser,
-    payload
-});
-
-/**
- *
- * @param {Object} payload
- * @returns {Object}
- */
-
-const bugReceived = payload => ({
-    type: types.bugsReceived,
-    payload
-});
+const url = '/bugs';
 
 /**
  *
@@ -70,7 +17,7 @@ const loadBugs = () => (dispatch, getState) => {
 
     dispatch(
         apiCallBegan({
-            url: '/bugs',
+            url,
             onStart: types.bugsRequested,
             onSuccess: types.bugsReceived,
             onError: types.bugsRequestFailed
@@ -86,18 +33,39 @@ const loadBugs = () => (dispatch, getState) => {
 
 const addBug = bug =>
     apiCallBegan({
-        url: '/bugs',
+        url,
         method: 'post',
         data: bug,
         onSuccess: types.bugAdded
     });
 
-export {
-    bugAdded,
-    bugRemoved,
-    bugResolved,
-    bugAssignedToUser,
-    bugReceived,
-    loadBugs,
-    addBug
-};
+/**
+ *
+ * @param {number} id
+ * @returns {Object}
+ */
+
+const resolveBug = id =>
+    apiCallBegan({
+        url: `${url}/${id}`,
+        method: 'patch',
+        data: { resolved: true },
+        onSuccess: types.bugResolved
+    });
+
+/**
+ *
+ * @param {number} bugId
+ * @param {number} userId
+ * @returns {Object}
+ */
+
+const assignBugToUser = (bugId, userId) =>
+    apiCallBegan({
+        url: `${url}/${bugId}`,
+        method: 'patch',
+        data: { userId }, // what we add on the server payload response
+        onSuccess: types.bugAssignedtoUser
+    });
+
+export { loadBugs, addBug, resolveBug, assignBugToUser };

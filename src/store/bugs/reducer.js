@@ -31,7 +31,7 @@ const reducer = (state = initialState, action) => {
             return { ...state, list };
         }
         case types.bugAssignedtoUser: {
-            const { bugId, userId } = action.payload;
+            const { id: bugId, userId } = action.payload;
             const list = state.list.map(bug =>
                 bug.id === bugId ? { ...bug, userId } : bug
             );

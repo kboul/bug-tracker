@@ -1,6 +1,11 @@
 import store from './store';
 // import store from './customStore';
-import { loadBugs, addBug } from './store/bugs/actions';
+import {
+    loadBugs,
+    addBug,
+    resolveBug,
+    assignBugToUser
+} from './store/bugs/actions';
 import { projectAdded } from './store/projects/actions';
 import { userAdded } from './store/users/action';
 import { unresolvedBugs, bugsByUser } from './store/utils';
@@ -15,11 +20,7 @@ import { unresolvedBugs, bugsByUser } from './store/utils';
 // store.dispatch(userAdded({ name: 'User 2' }));
 // store.dispatch(userAdded({ name: 'User 3' }));
 
-// store.dispatch(bugAssignedToUser({ bugId: 1, userId: 1 }));
-
 // // // unsuscribe();
-
-// store.dispatch(bugResolved({ id: 1 }));
 
 // store.dispatch(projectAdded({ name: 'Project 1' }));
 
@@ -33,4 +34,8 @@ import { unresolvedBugs, bugsByUser } from './store/utils';
 // console.log(bugsByUser1);
 store.dispatch(loadBugs());
 
-store.dispatch(addBug({ description: 'new bug' }));
+setTimeout(() => store.dispatch(addBug({ description: 'new bug' })), 4000);
+
+setTimeout(() => store.dispatch(resolveBug(2)), 2000);
+
+setTimeout(() => store.dispatch(assignBugToUser(4, 4)), 5000);
