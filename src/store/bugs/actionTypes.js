@@ -5,5 +5,7 @@ export default {
     bugRemoved: `${prefix}/bugRemoved`,
     bugResolved: `${prefix}/bugResolved`,
     bugAssignedtoUser: `${prefix}/bugAssignedtoUser`,
-    bugsReceived: `${prefix}/bugsReceived`
+    bugsReceived: `${prefix}/bugsReceived`,
+    bugsRequested: `${prefix}/bugsRequested`,
+    bugsRequestFailed: `${prefix}/bugsRequestFailed`
 };

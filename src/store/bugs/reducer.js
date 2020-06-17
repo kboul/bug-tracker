@@ -47,9 +47,12 @@ const reducer = (state = initialState, action) => {
             );
             return { ...state, list };
         }
-        case types.bugsReceived: {
-            return { ...state, list: action.payload };
-        }
+        case types.bugsReceived:
+            return { ...state, list: action.payload, loading: false };
+        case types.bugsRequested:
+            return { ...state, loading: true };
+        case types.bugsRequestFailed:
+            return { ...state, loading: false };
         default:
             return state;
     }

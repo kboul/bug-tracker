@@ -64,7 +64,9 @@ const bugReceived = payload => ({
 const loadBugs = () =>
     apiCallBegan({
         url: '/bugs',
-        onSuccess: types.bugsReceived
+        onStart: types.bugsRequested,
+        onSuccess: types.bugsReceived,
+        onError: types.bugsRequestFailed
     });
 
 export {
