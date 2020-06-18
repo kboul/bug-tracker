@@ -8,12 +8,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case types.userAdded: {
-            return {
-                ...state,
-                list: [...state.list, { ...action.payload }]
-            };
-        }
         case types.usersRequested:
             return { ...state, loading: true };
         case types.usersReceived:

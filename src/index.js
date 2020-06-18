@@ -1,5 +1,4 @@
 import store from './store';
-// import store from './customStore';
 import {
     loadBugs,
     addBug,
@@ -7,50 +6,43 @@ import {
     assignBugToUser
 } from './store/bugs/actions';
 import { loadUsers } from './store/users/action';
-// import { projectAdded } from './store/projects/actions';
-// import { userAdded } from './store/users/action';
-// import { unresolvedBugs, bugsByUser } from './store/utils';
-
-// console.log(store.getState());
-
-// store.dispatch(userAdded({ name: 'User 1' }));
-// store.dispatch(userAdded({ name: 'User 2' }));
-// store.dispatch(userAdded({ name: 'User 3' }));
-
-// // // unsuscribe();
-
-// store.dispatch(projectAdded({ name: 'Project 1' }));
-
-// // store.dispatch({ type: 'error', payload: { message: 'An error occured' } });
-
-// const unresolvedbugs = unresolvedBugs(store.getState());
+import { unresolvedBugs, bugsByUser } from './store/utils';
 
 // const bugsByUser1 = bugsByUser(1)(store.getState());
 
-// console.log(unresolvedbugs);
-// console.log(bugsByUser1);
 store.dispatch(loadUsers());
 store.dispatch(loadBugs());
 
 store.subscribe(() => {
     buildTable();
+    buildUnresolvedBugs();
 });
+
+const buildUnresolvedBugs = () => {
+    const unresolvedBugsEl = document.getElementById('unresolvedBugs');
+    unresolvedBugsEl.innerHTML = `<b>Active Bugs</b>: ${
+        unresolvedBugs(store.getState()).length
+    }`;
+};
 
 const buildTable = () => {
     const bugs = store.getState().entities.bugs.list;
     if (bugs.length === 0) return;
 
     const bugsTable = document.getElementById('bugsTable');
+    if (bugsTable.children.length > 0) bugsTable.innerHTML = '';
     bugsTable.append();
 
     const tr = document.createElement('tr');
     bugsTable.appendChild(tr);
 
     Object.keys(bugs[0]).forEach(bugProp => {
-        const th = document.createElement('th');
-        th.appendChild(document.createTextNode(bugProp));
+        const th = createTh(tableCellThValue(bugProp));
         tr.appendChild(th);
     });
+
+    const emptyTh = createTh('');
+    tr.appendChild(emptyTh);
 
     bugs.forEach((bug, index) => {
         const tr = document.createElement('tr');
@@ -60,11 +52,27 @@ const buildTable = () => {
             const td = document.createElement('td');
             const bugValue = bug[bugKey];
             td.appendChild(
-                document.createTextNode(tableCellValue(bugKey, bugValue))
+                document.createTextNode(tableCellTdValue(bugKey, bugValue))
             );
             tr.appendChild(td);
         });
+
+        const resolveBtn = document.createElement('button');
+        resolveBtn.innerHTML = bug.resolved ? 'unresolve' : 'resolve';
+        resolveBtn.addEventListener('click', () => {
+            store.dispatch(resolveBug(bug.id, !bug.resolved));
+        });
+
+        const td = document.createElement('td');
+        td.appendChild(resolveBtn);
+        tr.appendChild(td);
     });
+};
+
+const createTh = textNode => {
+    const th = document.createElement('th');
+    th.appendChild(document.createTextNode(textNode));
+    return th;
 };
 
 /**
@@ -74,7 +82,7 @@ const buildTable = () => {
  * @returns {string}
  */
 
-const tableCellValue = (bugKey, bugValue) => {
+const tableCellTdValue = (bugKey, bugValue) => {
     switch (bugKey) {
         case 'userId':
             return userIdToName(bugValue);
@@ -84,6 +92,15 @@ const tableCellValue = (bugKey, bugValue) => {
             return bugValue;
     }
 };
+
+/**
+ *
+ * @param {string} bugProp
+ * @returns {string}
+ */
+
+const tableCellThValue = bugProp =>
+    bugProp === 'userId' ? 'assigned to' : bugProp;
 
 /**
  *
@@ -106,7 +123,5 @@ const userIdToName = bugValue => {
 };
 
 // setTimeout(() => store.dispatch(addBug({ description: 'new bug' })), 4000);
-
-// setTimeout(() => store.dispatch(resolveBug(2)), 2000);
 
 // setTimeout(() => store.dispatch(assignBugToUser(4, 4)), 5000);

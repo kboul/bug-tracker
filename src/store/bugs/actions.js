@@ -42,14 +42,15 @@ const addBug = bug =>
 /**
  *
  * @param {number} id
+ * @param {bool} resolved
  * @returns {Object}
  */
 
-const resolveBug = id =>
+const resolveBug = (id, resolved) =>
     apiCallBegan({
         url: `${url}/${id}`,
         method: 'patch',
-        data: { resolved: true },
+        data: { resolved },
         onSuccess: types.bugResolved
     });
 

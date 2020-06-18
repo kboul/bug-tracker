@@ -24,9 +24,9 @@ const reducer = (state = initialState, action) => {
             };
         }
         case types.bugResolved: {
-            const { id } = action.payload;
+            const { id, resolved } = action.payload;
             const list = state.list.map(bug =>
-                bug.id === id ? { ...bug, resolved: true } : bug
+                bug.id === id ? { ...bug, resolved } : bug
             );
             return { ...state, list };
         }
