@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import bugsReducer from './bugs/reducer';
-import projectsReducer from './projects/reducer';
 import usersReducer from './users/reducer';
+import uiReducer from './ui/reducer';
 
 export default combineReducers({
     bugs: bugsReducer,
-    projects: projectsReducer,
-    users: usersReducer
+    users: usersReducer,
+    ui: uiReducer
 });

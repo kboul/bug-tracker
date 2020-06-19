@@ -12,28 +12,28 @@ const bugs = [
         description: 'Window width is very large on login screen',
         userId: 1,
         resolved: true,
-        priority: 'low'
+        priority: 1
     },
     {
         id: 2,
         description: 'Popup text on landing page is blurry',
-        userId: 1,
+        userId: 4,
         resolved: false,
-        priority: 'high'
+        priority: 3
     },
     {
         id: 3,
         description: 'Navbar should be sticky',
         userId: 2,
         resolved: false,
-        priority: 'medium'
+        priority: 2
     },
     {
         id: 4,
         description: 'Sidebar needs to be togglable on the left',
         userId: null,
         resolved: false,
-        priority: 'high'
+        priority: 3
     }
 ];
 
@@ -44,12 +44,23 @@ const users = [
     { id: 4, name: 'George' }
 ];
 
+app.get('/api/users', (req, res) => {
+    res.json(users);
+});
+
 app.get('/api/bugs', (req, res) => {
     res.json(bugs);
 });
 
 app.post('/api/bugs', (req, res) => {
-    const bug = { id: Date.now(), resolved: false, ...req.body };
+    const { description, userId, resolved, priority } = req.body;
+    const bug = {
+        id: bugs.length + 1,
+        description,
+        userId,
+        resolved,
+        priority
+    };
     bugs.push(bug);
 
     res.json(bug);
@@ -62,10 +73,6 @@ app.patch('/api/bugs/:id', (req, res) => {
     if ('userId' in req.body) bug.userId = req.body.userId;
 
     res.json(bug);
-});
-
-app.get('/api/users', (req, res) => {
-    res.json(users);
 });
 
 app.listen(9001, () => {

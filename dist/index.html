@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="./style.css" />
-        <title>Redux Starter Project</title>
+        <title>Bug Tracker App</title>
     </head>
 
     <body>
@@ -13,7 +13,38 @@
                 <h3>List of Bugs</h3>
                 <table id="bugsTable"></table>
                 <div id="unresolvedBugs"></div>
-                <button type="button" id="addBug">Add a bug</button>
+                <div id="addBugModal" class="modal">
+                    <div class="modalContent">
+                        <div class="modalHeader">
+                            <span id="closeBtn">&times;</span>
+                            <h2>Add a new bug</h2>
+                        </div>
+                        <div class="modalBody">
+                            <form>
+                                <label for="description">Description:</label
+                                ><br />
+                                <input type="text" id="description" /><br />
+                                <label for="userId">Assign to:</label><br />
+                                <select id="userId"></select
+                                ><br />
+                                <label for="resolved">Resolved:</label><br />
+                                <select id="resolved"></select
+                                ><br />
+                                <label for="priority">Priority:</label><br />
+                                <select id="priority"></select
+                                ><br />
+                            </form>
+                        </div>
+                        <div class="modalFooter">
+                            <button type="submit" id="doAddBugBtn" disabled>
+                                Add bug
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="addBugBtn">
+                    Add a bug
+                </button>
             </div>
         </div>
         <script src="app.js"></script>
