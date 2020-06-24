@@ -1,5 +1,5 @@
 import store from './store';
-import { loadBugs, addBug, resolveBug } from './store/bugs/actions';
+import { loadBugs, addBug, resolveBug, removeBug } from './store/bugs/actions';
 import { loadUsers } from './store/users/action';
 import { unresolvedBugs } from './store/utils';
 import {
@@ -63,27 +63,30 @@ store.subscribe(updateUI);
 
 // Table
 const buildTable = () => {
-    const bugs = store.getState().entities.bugs.list;
-    if (bugs.length === 0) return;
-
-    const bugsTable = document.getElementById('bugsTable');
-    if (bugsTable.children.length > 0) bugsTable.innerHTML = '';
-    bugsTable.append();
+    const { list: bugs, lastFetch } = store.getState().entities.bugs;
+    if (!lastFetch) return;
+    const bugsTableEl = document.getElementById('bugsTable');
+    if (bugsTableEl.children.length > 0) bugsTableEl.innerHTML = '';
+    bugsTableEl.append();
 
     const tr = document.createElement('tr');
-    bugsTable.appendChild(tr);
+    bugsTableEl.appendChild(tr);
+
+    if (!bugs.length) return;
 
     Object.keys(bugs[0]).forEach(bugProp => {
         const th = createTh(tableCellThValue(bugProp));
         tr.appendChild(th);
     });
 
-    const emptyTh = createTh('');
-    tr.appendChild(emptyTh);
+    const resolveBugBtnTh = createTh('');
+    tr.appendChild(resolveBugBtnTh);
+    const deleteBugITh = createTh('');
+    tr.appendChild(deleteBugITh);
 
     bugs.forEach((bug, index) => {
         const tr = document.createElement('tr');
-        bugsTable.appendChild(tr);
+        bugsTableEl.appendChild(tr);
 
         Object.keys(bugs[index]).forEach(bugKey => {
             const td = document.createElement('td');
@@ -96,13 +99,24 @@ const buildTable = () => {
 
         const resolveBtn = document.createElement('button');
         resolveBtn.innerHTML = bug.resolved ? 'unresolve' : 'resolve';
+        resolveBtn.className = 'resolveBtn';
         resolveBtn.addEventListener('click', () => {
             store.dispatch(resolveBug(bug.id, !bug.resolved));
         });
 
-        const td = document.createElement('td');
-        td.appendChild(resolveBtn);
-        tr.appendChild(td);
+        const resolveBtnTd = document.createElement('td');
+        resolveBtnTd.appendChild(resolveBtn);
+        tr.appendChild(resolveBtnTd);
+
+        const deleteBugI = document.createElement('i');
+        deleteBugI.className = 'fa fa-trash';
+        deleteBugI.addEventListener('click', () => {
+            store.dispatch(removeBug(bug.id));
+        });
+
+        const deleteBugITd = document.createElement('td');
+        deleteBugITd.appendChild(deleteBugI);
+        tr.appendChild(deleteBugITd);
     });
 };
 
@@ -119,7 +133,7 @@ const buildUnresolvedBugs = () => {
 
 descriptionEl.addEventListener('input', e => {
     store.dispatch(changeDescription({ description: e.target.value }));
-    disableDoAddBug();
+    validateAddBugForm();
 });
 
 userIdEl.addEventListener('change', e => {
@@ -146,7 +160,7 @@ doAddBugBtnEl.addEventListener('click', () => {
     addBugModalEl.style.display = 'none';
 });
 
-const disableDoAddBug = () => {
+const validateAddBugForm = () => {
     const description = store.getState().entities.ui.description;
     doAddBugBtnEl.disabled = description === '' ? true : false;
 };

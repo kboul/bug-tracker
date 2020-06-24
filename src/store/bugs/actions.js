@@ -69,4 +69,18 @@ const assignBugToUser = (bugId, userId) =>
         onSuccess: types.bugAssignedtoUser
     });
 
-export { loadBugs, addBug, resolveBug, assignBugToUser };
+/**
+ *
+ * @param {number} id
+ * @returns {Object}
+ */
+
+const removeBug = id =>
+    apiCallBegan({
+        url: `${url}/${id}`,
+        method: 'delete',
+        data: {},
+        onSuccess: types.bugRemoved
+    });
+
+export { loadBugs, addBug, resolveBug, assignBugToUser, removeBug };

@@ -63,8 +63,17 @@ select {
     text-align: center;
 }
 
+.resolveBtn {
+    cursor: pointer;
+}
+
 #addBugBtn {
     margin-top: 10px;
+    cursor: pointer;
+}
+
+#doAddBugBtn {
+    cursor: pointer;
 }
 
 #unresolvedBugs {
@@ -146,4 +155,8 @@ select {
     to {
         opacity: 1;
     }
+}
+
+.fa-trash {
+    cursor: pointer;
 }

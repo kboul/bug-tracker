@@ -8,28 +8,28 @@ app.use(bodyParser.json());
 
 const bugs = [
     {
-        id: 1,
+        id: 123,
         description: 'Window width is very large on login screen',
         userId: 1,
         resolved: true,
         priority: 1
     },
     {
-        id: 2,
+        id: 223,
         description: 'Popup text on landing page is blurry',
         userId: 4,
         resolved: false,
         priority: 3
     },
     {
-        id: 3,
+        id: 322,
         description: 'Navbar should be sticky',
         userId: 2,
         resolved: false,
         priority: 2
     },
     {
-        id: 4,
+        id: 433,
         description: 'Sidebar needs to be togglable on the left',
         userId: null,
         resolved: true,
@@ -48,14 +48,16 @@ app.get('/api/users', (req, res) => {
     res.json(users);
 });
 
-app.get('/api/bugs', (req, res) => {
+const bugsEndpoint = '/api/bugs';
+
+app.get(bugsEndpoint, (req, res) => {
     res.json(bugs);
 });
 
-app.post('/api/bugs', (req, res) => {
+app.post(bugsEndpoint, (req, res) => {
     const { description, userId, resolved, priority } = req.body;
     const bug = {
-        id: bugs.length + 1,
+        id: Date.now(),
         description,
         userId,
         resolved,
@@ -66,13 +68,28 @@ app.post('/api/bugs', (req, res) => {
     res.json(bug);
 });
 
-app.patch('/api/bugs/:id', (req, res) => {
+app.patch(`${bugsEndpoint}/:id`, (req, res) => {
     const index = bugs.findIndex(bug => bug.id === parseInt(req.params.id));
     const bug = bugs[index];
     if ('resolved' in req.body) bug.resolved = req.body.resolved;
     if ('userId' in req.body) bug.userId = req.body.userId;
 
     res.json(bug);
+});
+
+app.delete(`${bugsEndpoint}/:id`, (req, res) => {
+    const {
+        params: { id }
+    } = req;
+    const bug = bugs.find(bug => bug.id === parseInt(id));
+
+    if (!bug) {
+        res.status(404).send(`The bug with the id ${id} was not found`);
+        return;
+    }
+    const index = bugs.indexOf(bug);
+    bugs.splice(index, 1);
+    res.send(bug);
 });
 
 app.listen(9001, () => {
