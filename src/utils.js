@@ -65,15 +65,6 @@ const formatResolvedValue = value => {
 
 /**
  *
- * @param {string} value
- * @returns {bool}
- */
-
-const unFormatResolvedValue = value => {
-    return value === 'no' ? false : true;
-};
-/**
- *
  * @param {number} codeNum
  * @returns {string}
  */
@@ -97,5 +88,5 @@ export {
     tableCellTdValue,
     tableCellThValue,
     formatPriorityValue,
-    unFormatResolvedValue
+    formatResolvedValue
 };

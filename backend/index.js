@@ -32,7 +32,7 @@ const bugs = [
         id: 4,
         description: 'Sidebar needs to be togglable on the left',
         userId: null,
-        resolved: false,
+        resolved: true,
         priority: 3
     }
 ];

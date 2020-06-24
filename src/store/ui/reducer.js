@@ -1,12 +1,11 @@
 import types from './actionTypes';
 import { resolvedValues, priorityValues } from '../../constants';
-import { unFormatResolvedValue } from '../../utils';
 
 const initialState = {
     description: '',
     userId: 1,
-    resolved: unFormatResolvedValue(resolvedValues[0].name),
-    priority: priorityValues[0].name
+    resolved: resolvedValues[0].value,
+    priority: priorityValues[0].value
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,15 +18,15 @@ const reducer = (state = initialState, action) => {
         }
         case types.resolvedChanged: {
             let { resolved } = action.payload;
-            resolved = unFormatResolvedValue(resolved);
+            resolved = resolved === 'true' ? true : false;
             return { ...state, resolved };
         }
         case types.priorityChanged: {
             let { priority } = action.payload;
-            priority = priority === 'low' ? 1 : priority === 'medium' ? 2 : 3;
+            priority = Number(priority);
             return { ...state, priority };
         }
-        case types.clearModalValues:
+        case types.resetModalValues:
             return initialState;
         default:
             return state;

@@ -5,5 +5,5 @@ export default {
     userIdChanged: `${prefix}/userIdChanged`,
     resolvedChanged: `${prefix}/resolvedChanged`,
     priorityChanged: `${prefix}/priorityChanged`,
-    clearModalValues: `${prefix}/clearModalValues`
+    resetModalValues: `${prefix}/resetModalValues`
 };

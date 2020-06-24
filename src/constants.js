@@ -1,12 +1,12 @@
 const resolvedValues = [
-    { name: 'no', id: 1 },
-    { name: 'yes', id: 2 }
+    { id: 1, key: 'no', value: false },
+    { id: 2, key: 'yes', value: true }
 ];
 
 const priorityValues = [
-    { name: 'low', id: 1 }, // 1: low
-    { name: 'medium', id: 2 }, // 2: medium
-    { name: 'high', id: 3 } // 3: high
+    { id: 1, key: 'low', value: 1 },
+    { id: 2, key: 'medium', value: 2 },
+    { id: 3, key: 'high', value: 3 }
 ];
 
 export { resolvedValues, priorityValues };
