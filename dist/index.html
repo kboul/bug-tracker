@@ -17,11 +17,11 @@
                 <h3>List of Bugs</h3>
                 <table id="bugsTable"></table>
                 <div id="unresolvedBugs"></div>
-                <div id="addBugModal" class="modal">
+                <div id="bugModal" class="modal">
                     <div class="modalContent">
                         <div class="modalHeader">
                             <span id="closeBtn">&times;</span>
-                            <h2>Add a new bug</h2>
+                            <h2 id="bugModalHeader"></h2>
                         </div>
                         <div class="modalBody">
                             <form>
@@ -40,9 +40,11 @@
                             </form>
                         </div>
                         <div class="modalFooter">
-                            <button type="submit" id="doAddBugBtn" disabled>
-                                Add bug
-                            </button>
+                            <button
+                                type="submit"
+                                id="addOrEditBugBtn"
+                                disabled
+                            ></button>
                         </div>
                     </div>
                 </div>

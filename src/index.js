@@ -1,5 +1,5 @@
 import store from './store';
-import { loadBugs, addBug, resolveBug, removeBug } from './store/bugs/actions';
+import { loadBugs, addBug, removeBug, editBug } from './store/bugs/actions';
 import { loadUsers } from './store/users/action';
 import { unresolvedBugs } from './store/utils';
 import {
@@ -7,10 +7,11 @@ import {
     changeUserId,
     changeResolved,
     changePriority,
+    changeModalValues,
     resetModalValues
-} from './store/ui/actions';
+} from './store/modal/actions';
 import { createTh, tableCellThValue, tableCellTdValue } from './utils';
-import { resolvedValues, priorityValues } from './constants';
+import consts from './constants';
 
 store.dispatch(loadUsers());
 store.dispatch(loadBugs());
@@ -19,17 +20,18 @@ const descriptionEl = document.getElementById('description');
 const userIdEl = document.getElementById('userId');
 const resolvedEl = document.getElementById('resolved');
 const priorityEl = document.getElementById('priority');
-const doAddBugBtnEl = document.getElementById('doAddBugBtn');
-const addBugModalEl = document.getElementById('addBugModal');
+const addOrEditBugBtnEl = document.getElementById('addOrEditBugBtn');
+const bugModalEl = document.getElementById('bugModal');
 const addBugBtnEl = document.getElementById('addBugBtn');
 const closeBtnEl = document.getElementById('closeBtn');
+const bugModalHeaderEl = document.getElementById('bugModalHeader');
 
 // build dropdown lists with static data
-resolvedValues.forEach(({ key, value }) => {
+consts.resolvedValues.forEach(({ key, value }) => {
     resolvedEl.options[resolvedEl.options.length] = new Option(key, value);
 });
 
-priorityValues.forEach(({ key, value }) => {
+consts.priorityValues.forEach(({ key, value }) => {
     priorityEl.options[priorityEl.options.length] = new Option(key, value);
 });
 
@@ -53,7 +55,7 @@ const updateUI = () => {
         userId,
         resolved,
         priority
-    } = store.getState().entities.ui;
+    } = store.getState().entities.modal;
     descriptionEl.value = description;
     userIdEl.value = userId;
     resolvedEl.value = resolved;
@@ -79,8 +81,8 @@ const buildTable = () => {
         tr.appendChild(th);
     });
 
-    const resolveBugBtnTh = createTh('');
-    tr.appendChild(resolveBugBtnTh);
+    const editBugITh = createTh('');
+    tr.appendChild(editBugITh);
     const deleteBugITh = createTh('');
     tr.appendChild(deleteBugITh);
 
@@ -97,16 +99,20 @@ const buildTable = () => {
             tr.appendChild(td);
         });
 
-        const resolveBtn = document.createElement('button');
-        resolveBtn.innerHTML = bug.resolved ? 'unresolve' : 'resolve';
-        resolveBtn.className = 'resolveBtn';
-        resolveBtn.addEventListener('click', () => {
-            store.dispatch(resolveBug(bug.id, !bug.resolved));
+        const editBugI = document.createElement('i');
+        editBugI.className = 'fa fa-pencil';
+        editBugI.addEventListener('click', () => {
+            const selectedBug = bugs.find(b => b.id === bug.id);
+            store.dispatch(changeModalValues(selectedBug));
+            bugModalHeaderEl.innerHTML = consts.modalHeaderEdit;
+            addOrEditBugBtnEl.innerHTML = consts.modalButtonEdit;
+            validateBugForm();
+            openModal();
         });
 
-        const resolveBtnTd = document.createElement('td');
-        resolveBtnTd.appendChild(resolveBtn);
-        tr.appendChild(resolveBtnTd);
+        const editBugITd = document.createElement('td');
+        editBugITd.appendChild(editBugI);
+        tr.appendChild(editBugITd);
 
         const deleteBugI = document.createElement('i');
         deleteBugI.className = 'fa fa-trash';
@@ -122,7 +128,7 @@ const buildTable = () => {
 
 const buildUnresolvedBugs = () => {
     const unresolvedBugsEl = document.getElementById('unresolvedBugs');
-    unresolvedBugsEl.innerHTML = `<b>Unresolved Bugs</b>: ${
+    unresolvedBugsEl.innerHTML = `${consts.unresolvedBugs}: ${
         unresolvedBugs(store.getState()).length
     }`;
 };
@@ -133,7 +139,7 @@ const buildUnresolvedBugs = () => {
 
 descriptionEl.addEventListener('input', e => {
     store.dispatch(changeDescription({ description: e.target.value }));
-    validateAddBugForm();
+    validateBugForm();
 });
 
 userIdEl.addEventListener('change', e => {
@@ -148,34 +154,44 @@ priorityEl.addEventListener('change', e => {
     store.dispatch(changePriority({ priority: e.target.value }));
 });
 
-doAddBugBtnEl.addEventListener('click', () => {
+addOrEditBugBtnEl.addEventListener('click', () => {
     const {
         description,
         userId,
         resolved,
         priority
-    } = store.getState().entities.ui;
-    store.dispatch(addBug({ description, userId, resolved, priority }));
-    store.dispatch(resetModalValues());
-    addBugModalEl.style.display = 'none';
+    } = store.getState().entities.modal;
+    const modalHeader = bugModalHeaderEl.innerHTML;
+    if (modalHeader === consts.modalHeaderEdit) {
+        store.dispatch(editBug(store.getState().entities.modal));
+    } else {
+        store.dispatch(addBug({ description, userId, resolved, priority }));
+        store.dispatch(resetModalValues());
+    }
+    bugModalEl.style.display = 'none';
 });
 
-const validateAddBugForm = () => {
-    const description = store.getState().entities.ui.description;
-    doAddBugBtnEl.disabled = description === '' ? true : false;
+const validateBugForm = () => {
+    const description = store.getState().entities.modal.description;
+    addOrEditBugBtnEl.disabled = description === '' ? true : false;
 };
 
-const openModal = () => (addBugModalEl.style.display = 'block');
-const closeModal = () => (addBugModalEl.style.display = 'none');
+const openModal = () => (bugModalEl.style.display = 'block');
+const closeModal = () => (bugModalEl.style.display = 'none');
 
 // Close modal if Outside Click
 const outsideClick = e => {
-    if (e.target == addBugModalEl) {
-        addBugModalEl.style.display = 'none';
+    if (e.target == bugModalEl) {
+        bugModalEl.style.display = 'none';
     }
 };
 
-addBugBtnEl.addEventListener('click', openModal);
+addBugBtnEl.addEventListener('click', () => {
+    store.dispatch(resetModalValues());
+    bugModalHeaderEl.innerHTML = consts.modalHeaderAdd;
+    addOrEditBugBtnEl.innerHTML = consts.modalButtonAdd;
+    openModal();
+});
 closeBtnEl.addEventListener('click', closeModal);
 window.addEventListener('click', outsideClick);
 

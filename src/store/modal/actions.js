@@ -50,8 +50,18 @@ const changePriority = payload => ({
  * @returns {Object}
  */
 
+const changeModalValues = payload => ({
+    type: types.modalValuesChanged,
+    payload
+});
+
+/**
+ *
+ * @returns {Object}
+ */
+
 const resetModalValues = () => ({
-    type: types.resetModalValues
+    type: types.modalValuesReset
 });
 
 export {
@@ -59,5 +69,6 @@ export {
     changeUserId,
     changeResolved,
     changePriority,
+    changeModalValues,
     resetModalValues
 };

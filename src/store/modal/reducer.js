@@ -1,11 +1,11 @@
 import types from './actionTypes';
-import { resolvedValues, priorityValues } from '../../constants';
+import consts from '../../constants';
 
 const initialState = {
     description: '',
     userId: 1,
-    resolved: resolvedValues[0].value,
-    priority: priorityValues[0].value
+    resolved: consts.resolvedValues[0].value,
+    priority: consts.priorityValues[0].value
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,7 +26,9 @@ const reducer = (state = initialState, action) => {
             priority = Number(priority);
             return { ...state, priority };
         }
-        case types.resetModalValues:
+        case types.modalValuesChanged:
+            return { ...state, ...action.payload };
+        case types.modalValuesReset:
             return initialState;
         default:
             return state;

@@ -41,17 +41,16 @@ const addBug = bug =>
 
 /**
  *
- * @param {number} id
- * @param {bool} resolved
+ * @param {Object} bug
  * @returns {Object}
  */
 
-const resolveBug = (id, resolved) =>
+const editBug = bug =>
     apiCallBegan({
-        url: `${url}/${id}`,
-        method: 'patch',
-        data: { resolved },
-        onSuccess: types.bugResolved
+        url: `${url}/${bug.id}`,
+        method: 'put',
+        data: bug,
+        onSuccess: types.bugEdited
     });
 
 /**
@@ -83,4 +82,4 @@ const removeBug = id =>
         onSuccess: types.bugRemoved
     });
 
-export { loadBugs, addBug, resolveBug, assignBugToUser, removeBug };
+export { loadBugs, addBug, editBug, removeBug, assignBugToUser };

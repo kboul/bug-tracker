@@ -1,9 +1,10 @@
-const prefix = 'ui';
+const prefix = 'modal';
 
 export default {
     descriptionChanged: `${prefix}/descriptionChanged`,
     userIdChanged: `${prefix}/userIdChanged`,
     resolvedChanged: `${prefix}/resolvedChanged`,
     priorityChanged: `${prefix}/priorityChanged`,
-    resetModalValues: `${prefix}/resetModalValues`
+    modalValuesChanged: `${prefix}/modalValuesChanged`,
+    modalValuesReset: `${prefix}/modalValuesReset`
 };

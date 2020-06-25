@@ -68,13 +68,22 @@ app.post(bugsEndpoint, (req, res) => {
     res.json(bug);
 });
 
-app.patch(`${bugsEndpoint}/:id`, (req, res) => {
-    const index = bugs.findIndex(bug => bug.id === parseInt(req.params.id));
-    const bug = bugs[index];
-    if ('resolved' in req.body) bug.resolved = req.body.resolved;
-    if ('userId' in req.body) bug.userId = req.body.userId;
+app.put(`${bugsEndpoint}/:id`, (req, res) => {
+    const {
+        params: { id },
+        body
+    } = req;
+    let bug = bugs.find(bug => bug.id === parseInt(id));
+    if (!bug) {
+        res.status(404).send(`The bug with the id ${id} was not found`);
+        return;
+    }
 
-    res.json(bug);
+    // update bug
+    Object.entries(body).forEach(([key, value]) => {
+        bug[key] = value;
+    });
+    res.send(bug);
 });
 
 app.delete(`${bugsEndpoint}/:id`, (req, res) => {
