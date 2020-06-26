@@ -22,6 +22,12 @@ npm install
 cd backend && npm start
 ```
 
+### Run unit & integration tests
+
+```
+npm run test
+```
+
 browser listens to [http://localhost:9000](http://localhost:9000) as default port for the front-end.
 
 browser listens to [http://localhost:9001/api/bugs](http://localhost:9001/api/bugs) as default port for the back-end.

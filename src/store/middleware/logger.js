@@ -9,7 +9,7 @@
 
 const logger = param => store => next => action => {
     // console.log('Logging', param);
-    next(action);
+    return next(action); // needs to be returned to be retrieved during tests
 };
 
 export default logger;

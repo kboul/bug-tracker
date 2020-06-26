@@ -1,4 +1,4 @@
-import store from './store';
+import configureStore from './store/configureStore';
 import { loadBugs, addBug, removeBug, editBug } from './store/bugs/actions';
 import { loadUsers } from './store/users/action';
 import { unresolvedBugs } from './store/utils';
@@ -12,6 +12,8 @@ import {
 } from './store/modal/actions';
 import { createTh, tableCellThValue, tableCellTdValue } from './utils';
 import consts from './constants';
+
+export const store = configureStore();
 
 store.dispatch(loadUsers());
 store.dispatch(loadBugs());

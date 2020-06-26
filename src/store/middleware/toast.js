@@ -9,7 +9,7 @@
 const toast = store => next => action => {
     if (action.type === 'error')
         console.log('Toastify: ', action.payload.message);
-    else next(action);
+    else return next(action); // needs to be returned to be retrieved during tests
 };
 
 export default toast;

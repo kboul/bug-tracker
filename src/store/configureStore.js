@@ -11,12 +11,12 @@ const composerEnhancer = composeWithDevTools({
 });
 
 // Put the list of third part plugins in an array
-const middleWares = [thunk, logger('console'), toast, api];
+export const middleWares = [thunk, logger('console'), toast, api];
 
-const store = createStore(
-    reducer,
-    // middlewares should go after reducer
-    compose(applyMiddleware(...middleWares), composerEnhancer())
-);
-
-export default store;
+export default function () {
+    return createStore(
+        reducer,
+        // middlewares should go after reducer
+        compose(applyMiddleware(...middleWares), composerEnhancer())
+    );
+}

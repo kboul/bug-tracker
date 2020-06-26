@@ -5,15 +5,18 @@
     "main": "index.js",
     "scripts": {
         "start": "webpack-dev-server --config ./webpack.config.js",
-        "test": "jest --watch"
+        "test": "jest --watch",
+        "test-coverage": "jest --coverage"
     },
     "keywords": [],
     "author": "Konstantinos Voulgaridis",
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.10.2",
+        "@babel/plugin-transform-runtime": "^7.10.3",
         "@babel/preset-env": "^7.10.2",
         "@types/jest": "^26.0.0",
+        "axios-mock-adapter": "^1.18.1",
         "babel-jest": "^26.0.1",
         "eslint": "^6.8.0",
         "eslint-config-airbnb": "^18.1.0",
