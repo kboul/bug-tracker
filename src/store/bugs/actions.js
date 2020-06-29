@@ -15,7 +15,9 @@ const loadBugs = () => (dispatch, getState) => {
     const diffInMinutes = moment().diff(moment(lastFetch), 'minutes');
     if (diffInMinutes < 10) return;
 
-    dispatch(
+    // here we return a function not an object because it is a thunk
+    // in order not to get undefined in oput tests we need to return the function
+    return dispatch(
         apiCallBegan({
             url,
             onStart: types.bugsRequested,

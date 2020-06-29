@@ -1,6 +1,6 @@
 import configureStore from './store/configureStore';
 import { loadBugs, addBug, removeBug, editBug } from './store/bugs/actions';
-import { loadUsers } from './store/users/action';
+import { loadUsers } from './store/users/actions';
 import { unresolvedBugs } from './store/utils';
 import {
     changeDescription,
@@ -27,6 +27,8 @@ const bugModalEl = document.getElementById('bugModal');
 const addBugBtnEl = document.getElementById('addBugBtn');
 const closeBtnEl = document.getElementById('closeBtn');
 const bugModalHeaderEl = document.getElementById('bugModalHeader');
+const bugsTableEl = document.getElementById('bugsTable');
+const loaderEl = document.getElementById('loader');
 
 // build dropdown lists with static data
 consts.resolvedValues.forEach(({ key, value }) => {
@@ -67,9 +69,11 @@ store.subscribe(updateUI);
 
 // Table
 const buildTable = () => {
-    const { list: bugs, lastFetch } = store.getState().entities.bugs;
+    const { list: bugs, loading, lastFetch } = store.getState().entities.bugs;
+    loaderEl.style.display = loading ? 'block' : 'none';
+
     if (!lastFetch) return;
-    const bugsTableEl = document.getElementById('bugsTable');
+
     if (bugsTableEl.children.length > 0) bugsTableEl.innerHTML = '';
     bugsTableEl.append();
 
