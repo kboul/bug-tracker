@@ -6,7 +6,7 @@
     "scripts": {
         "start": "nodemon index.js"
     },
-    "author": "Mosh Hamedani",
+    "author": "Konstantinos Voulgaridis",
     "license": "ISC",
     "dependencies": {
         "body-parser": "^1.19.0",

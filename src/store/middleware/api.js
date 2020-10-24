@@ -1,9 +1,8 @@
 import axios from 'axios';
-import types from '../api/actionTypes';
-import { apiCallSuccess, apiCallFailed } from '../api/actions';
+import { apiCallBegan, apiCallSuccess, apiCallFailed } from '../api';
 
 const api = ({ dispatch }) => next => async action => {
-    if (action.type !== types.apiCallBegan) return next(action);
+    if (action.type !== apiCallBegan.type) return next(action);
 
     const { url, method, data, onStart, onSuccess, onError } = action.payload;
 

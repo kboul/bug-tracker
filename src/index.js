@@ -1,7 +1,12 @@
 import configureStore from './store/configureStore';
-import { loadBugs, addBug, removeBug, editBug } from './store/bugs/actions';
-import { loadUsers } from './store/users/actions';
-import { unresolvedBugs } from './store/utils';
+import {
+    loadBugs,
+    addBug,
+    removeBug,
+    editBug,
+    unresolvedBugs
+} from './store/bugs';
+import { loadUsers } from './store/users';
 import {
     changeDescription,
     changeUserId,
@@ -9,7 +14,7 @@ import {
     changePriority,
     changeModalValues,
     resetModalValues
-} from './store/modal/actions';
+} from './store/modal';
 import { createTh, tableCellThValue, tableCellTdValue } from './utils';
 import consts from './constants';
 

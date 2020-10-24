@@ -1,13 +1,16 @@
-import types from './actionTypes';
+import configureStore from '../configureStore';
 import {
     changeDescription,
     changeUserId,
     changePriority,
     changeResolved,
     changeModalValues,
-    resetModalValues
-} from './actions';
-import configureStore from '../configureStore';
+    resetModalValues,
+    descriptionChanged,
+    userIdChanged,
+    resolvedChanged,
+    priorityChanged
+} from '.';
 
 describe('modal', () => {
     const bug = {
@@ -38,7 +41,7 @@ describe('modal', () => {
             const payload = { description: 'a' };
             const result = changeDescription(payload);
             const expected = {
-                type: types.descriptionChanged,
+                type: descriptionChanged.type,
                 payload
             };
 
@@ -55,7 +58,7 @@ describe('modal', () => {
             const payload = { userId: 2 };
             const result = changeUserId(payload);
             const expected = {
-                type: types.userIdChanged,
+                type: userIdChanged.type,
                 payload
             };
 
@@ -72,7 +75,7 @@ describe('modal', () => {
             const payload = { resolved: 'true' };
             const result = changeResolved(payload);
             const expected = {
-                type: types.resolvedChanged,
+                type: resolvedChanged.type,
                 payload
             };
 
@@ -89,7 +92,7 @@ describe('modal', () => {
             const payload = { priority: 2 };
             const result = changePriority(payload);
             const expected = {
-                type: types.priorityChanged,
+                type: priorityChanged.type,
                 payload
             };
 

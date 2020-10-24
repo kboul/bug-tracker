@@ -1,7 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+
 import configureStore from '../configureStore';
-import { loadUsers } from './actions';
+import { loadUsers } from '.';
 
 describe('users CRUD', () => {
     let fakeAxios;

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import bugsReducer from './bugs/reducer';
-import usersReducer from './users/reducer';
-import modalReducer from './modal/reducer';
+import bugsReducer from './bugs';
+import usersReducer from './users';
+import modalReducer from './modal';
 
 export default combineReducers({
     bugs: bugsReducer,

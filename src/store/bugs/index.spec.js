@@ -1,10 +1,17 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { addBug, editBug, removeBug, loadBugs } from './actions';
-import apiTypes from '../../store/api/actionTypes';
-import bugTypes from './actionTypes';
+
+import {
+    addBug,
+    editBug,
+    removeBug,
+    loadBugs,
+    bugAdded,
+    unresolvedBugs,
+    bugsByUser
+} from '.';
+import { apiCallBegan } from '../api';
 import configureStore from '../configureStore';
-import { unresolvedBugs, bugsByUser } from '../utils';
 
 describe('bugs', () => {
     const bug = {
@@ -30,12 +37,12 @@ describe('bugs', () => {
         it('should handle the addBug action', () => {
             const result = addBug(bug);
             const expected = {
-                type: apiTypes.apiCallBegan,
+                type: apiCallBegan.type,
                 payload: {
                     url,
                     method: 'post',
                     data: bug,
-                    onSuccess: bugTypes.bugAdded
+                    onSuccess: bugAdded.type
                 }
             };
             expect(result).toEqual(expected);
